@@ -1,0 +1,5 @@
+﻿  LinearEquationProject.cpp
+D:\Amr_Muhammad_Imp_Code\CodeBlocksRun\Digi\Foundation_Projects\LinearEquationProject\LinearEquationProject\LinearEquationProject.cpp(105,27): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+D:\Amr_Muhammad_Imp_Code\CodeBlocksRun\Digi\Foundation_Projects\LinearEquationProject\LinearEquationProject\LinearEquationProject.cpp(113,32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Amr_Muhammad_Imp_Code\CodeBlocksRun\Digi\Foundation_Projects\LinearEquationProject\LinearEquationProject\LinearEquationProject.cpp(125,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  LinearEquationProject.vcxproj -> D:\Amr_Muhammad_Imp_Code\CodeBlocksRun\Digi\Foundation_Projects\LinearEquationProject\x64\Debug\LinearEquationProject.exe
