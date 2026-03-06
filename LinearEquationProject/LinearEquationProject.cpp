@@ -123,19 +123,19 @@ class Solver {
     //   FUNC 1  parseTerm()
 
 
-    
+
     // دالة لاستخراج المعامل واسم المتغير من النص    
 
     //"3x2" → "x2"
-  
-    /*  
-    
+
+    /*
+
     "3x2" → "3"
 
      "-x1" → "-"
-      "x3" → "" 
-        
-    
+      "x3" → ""
+
+
 
     */
 
@@ -144,9 +144,9 @@ class Solver {
         for (int i = 0; i < s.length(); i++) {
             if (isalpha(s[i]))
             {
-                x_idx = i; 
-            break;
-            
+                x_idx = i;
+                break;
+
             }
         }
 
@@ -155,7 +155,7 @@ class Solver {
             eq.rhs -= atof(s.c_str());
         }
         else {
-             
+
 
             Term t;
             t.var = s.substr(x_idx);
@@ -209,8 +209,8 @@ public:
             }
 
 
-            parseTerm(current, eq);     
-            
+            parseTerm(current, eq);
+
             //  تحليل آخر حد بعد انتهاء اللوب   
  //   آخر حد مش وراه + ولا -
 
@@ -241,10 +241,10 @@ public:
             for (int j = 0; j < eqs[i].terms.size(); j++) {
                 bool exists = false;
                 for (int k = 0; k < all_vars.size(); k++) {
-                    if (all_vars[k] == eqs[i].terms[j].var) 
+                    if (all_vars[k] == eqs[i].terms[j].var)
                         exists = true;
                 }
-                if (!exists) 
+                if (!exists)
                     all_vars.push_back(eqs[i].terms[j].var);
             }
         }
@@ -269,6 +269,7 @@ public:
 
 
 
+    // FUNC 4 addEq()
 
     Equation addEq(Equation a, Equation b) {
         Equation res = a;
@@ -284,6 +285,7 @@ public:
 
 
 
+    // FUNC 5 subEq()
 
     ///////////////////////
     //////////////////////
@@ -307,7 +309,19 @@ public:
     //////////////////////
     ///////////////////////
 
+//eq1: 3x1 + 2x2 = 10
+//eq3 : x2 - x1 = 3
 
+    //3x1 + 2(x1 + 3) = 10
+    //    → 5x1 = 4
+
+
+
+
+
+        //FUN 6  // substituteVar()
+   
+    
     Equation substituteVar(string var, Equation eq1, Equation eq3) {
 
         Equation result = eq1;
@@ -343,11 +357,15 @@ public:
     ///////////////////////
     //////////////////////
 
-
     ///////////////////////
-    //////////////////////
+///////////////////////
 
 
+
+
+
+
+    //FUN 8 // getCoeff()
 
 
 
@@ -359,25 +377,60 @@ public:
         return 0;
     }
 
-
-
     ///////////////////////
-    //////////////////////
+    ///////////////////////
 
 
-    vector<vector<float>> getCoeffMatrix() {
+    //FUN 7  // getCoeffMatrix()
 
-        int n = eqs.size();
-        vector<vector<float>> mat(n, vector<float>(n));
 
+
+
+    // نحول getCoeffMatrix لمصفوفة ثابتة 10×10
+    void getCoeffMatrix(float mat[10][10], int& n) {
+        n = eqs.size();  // عدد المعادلات / المتغيرات
         for (int i = 0; i < n; i++)
             for (int j = 0; j < n; j++)
                 mat[i][j] = getCoeff(eqs[i], all_vars[j]);
+    }
 
-        return mat;
+    ///////////////////////
+    ///////////////////////
+
+
+
+   
+
+    //FUN 9  // determinant()
+
+
+
+
+    // دالة حساب determinant مصفوفة n×n
+    float determinant(float mat[10][10], int n) {
+        if (n == 1) return mat[0][0];
+        float det = 0;
+        float sub[10][10];
+        for (int p = 0; p < n; p++) {
+            int subi = 0;
+            for (int i = 1; i < n; i++) {
+                int subj = 0;
+                for (int j = 0; j < n; j++) {
+                    if (j == p) continue;
+                    sub[subi][subj] = mat[i][j];
+                    subj++;
+                }
+                subi++;
+            }
+            det += ((p % 2 == 0 ? 1 : -1) * mat[0][p] * determinant(sub, n - 1));
+        }
+        return det;
     }
 
 
+ 
+
+
 
 
 
@@ -388,40 +441,10 @@ public:
 
 
     ///////////////////////
-    //////////////////////
-
-
-       //////////////////////
-    //////////////////////
-
-
-    float determinant(vector<vector<float>> m) {
-        int n = m.size();
-        if (n == 1) return m[0][0];
-
-        float det = 0;
-        for (int p = 0; p < n; p++) {
-            vector<vector<float>> sub(n - 1, vector<float>(n - 1));
-            for (int i = 1; i < n; i++) {
-                int colIndex = 0;
-                for (int j = 0; j < n; j++) {
-                    if (j == p) continue;
-                    sub[i - 1][colIndex++] = m[i][j];
-                }
-            }
-            det += (p % 2 == 0 ? 1 : -1) * m[0][p] * determinant(sub);
-        }
-        return det;
-    } 
-
-     
-
-
+    ///////////////////////
 
     ///////////////////////
-    //////////////////////
-
-    
+    ///////////////////////
 
 
 
@@ -429,108 +452,68 @@ public:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-// FUNC 4  execute()
-
-
-
-                                            // need update
+    // FUNC 10 execute() (مصححة للعمل مع مصفوفة ثابتة)
 
     void execute() {
-
         string cmd;
-
         while (cin >> cmd && cmd != "quit") {
 
-            //   D : Coefficient Matrix
             if (cmd == "D") {
+                float mat[10][10]; int n;
+                getCoeffMatrix(mat, n);
 
-                if (cin.peek() == '\n') {
-                    // D فقط
-                    vector<vector<float>> mat = getCoeffMatrix();
-
-                    for (int i = 0; i < mat.size(); i++) {
-                        for (int j = 0; j < mat.size(); j++)
+                if (cin.peek() == '\n') { // D فقط
+                    for (int i = 0; i < n; i++) {
+                        for (int j = 0; j < n; j++)
                             cout << mat[i][j] << " ";
                         cout << endl;
                     }
                 }
-                else {
-                    // D x1
-                    string var;
-                    cin >> var;
-
-                    vector<vector<float>> mat = getCoeffMatrix();
-
+                else { // D x
+                    string var; cin >> var;
                     int col = -1;
                     for (int i = 0; i < all_vars.size(); i++)
-                        if (all_vars[i] == var)
-                            col = i;
-
-                    for (int i = 0; i < mat.size(); i++)
+                        if (all_vars[i] == var) col = i;
+                    for (int i = 0; i < n; i++)
                         mat[i][col] = eqs[i].rhs;
-
-                    for (int i = 0; i < mat.size(); i++) {
-                        for (int j = 0; j < mat.size(); j++)
+                    for (int i = 0; i < n; i++) {
+                        for (int j = 0; j < n; j++)
                             cout << mat[i][j] << " ";
                         cout << endl;
                     }
                 }
             }
 
-            //   D_value
             else if (cmd == "D_value") {
-
-                vector<vector<float>> mat = getCoeffMatrix();
-                cout << determinant(mat) << endl;
+                float mat[10][10]; int n;
+                getCoeffMatrix(mat, n);
+                cout << determinant(mat, n) << endl;
             }
 
-            //   solve
             else if (cmd == "solve") {
-
-                vector<vector<float>> mat = getCoeffMatrix();
-                float D = determinant(mat);
-
-                if (fabs(D) < 1e-6) {
-                    cout << "No Solution" << endl;
-                    continue;
-                }
+                float mat[10][10]; int n;
+                getCoeffMatrix(mat, n);
+                float D = determinant(mat, n);
+                if (fabs(D) < 1e-6) { cout << "No Solution" << endl; continue; }
 
                 for (int v = 0; v < all_vars.size(); v++) {
-
-                    vector<vector<float>> temp = mat;
-
-                    for (int i = 0; i < eqs.size(); i++)
+                    float temp[10][10];
+                    int i, j;
+                    for (i = 0; i < n; i++)
+                        for (j = 0; j < n; j++)
+                            temp[i][j] = mat[i][j];
+                    for (i = 0; i < n; i++)
                         temp[i][v] = eqs[i].rhs;
-
-                    float Dv = determinant(temp);
+                    float Dv = determinant(temp, n);
                     cout << all_vars[v] << "=" << Dv / D << endl;
                 }
             }
         }
     }
+    
 
 
-
-
-
-
-
-    };
-
-
-
-
+};
 
 
 
@@ -541,34 +524,31 @@ public:
 
 
 
+    int main() {
+
+        // run it on CMD
 
 
-int main() {
 
-                            // run it on CMD
-     
+        int n;
+        if (!(cin >> n))
+            return 0;
 
 
-    int n;
-    if (!(cin >> n))
+        Solver mySolver;
+
+        mySolver.readEquations(n);
+        mySolver.execute();
+
+
+
+
+
+
+
+
         return 0;
 
 
-    Solver mySolver;
 
-    mySolver.readEquations(n);
-    mySolver.execute();
-   
-     
-    
-    
-    
-    
-    
-    
-    return 0;
-
- 
-     
-
-}
+   }
