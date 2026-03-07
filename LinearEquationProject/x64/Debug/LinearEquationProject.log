@@ -1,6 +1,7 @@
 ﻿  LinearEquationProject.cpp
-D:\Amr_Muhammad_Imp_Code\CodeBlocksRun\Digi\Foundation_Projects\LinearEquationProject\LinearEquationProject\LinearEquationProject.cpp(155,27): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
-D:\Amr_Muhammad_Imp_Code\CodeBlocksRun\Digi\Foundation_Projects\LinearEquationProject\LinearEquationProject\LinearEquationProject.cpp(167,31): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\Amr_Muhammad_Imp_Code\CodeBlocksRun\Digi\Foundation_Projects\LinearEquationProject\LinearEquationProject\LinearEquationProject.cpp(200,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\Amr_Muhammad_Imp_Code\CodeBlocksRun\Digi\Foundation_Projects\LinearEquationProject\LinearEquationProject\LinearEquationProject.cpp(391,21): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\Amr_Muhammad_Imp_Code\CodeBlocksRun\Digi\Foundation_Projects\LinearEquationProject\LinearEquationProject\LinearEquationProject.cpp(192,27): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+D:\Amr_Muhammad_Imp_Code\CodeBlocksRun\Digi\Foundation_Projects\LinearEquationProject\LinearEquationProject\LinearEquationProject.cpp(204,31): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Amr_Muhammad_Imp_Code\CodeBlocksRun\Digi\Foundation_Projects\LinearEquationProject\LinearEquationProject\LinearEquationProject.cpp(235,26): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\Amr_Muhammad_Imp_Code\CodeBlocksRun\Digi\Foundation_Projects\LinearEquationProject\LinearEquationProject\LinearEquationProject.cpp(239,26): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\Amr_Muhammad_Imp_Code\CodeBlocksRun\Digi\Foundation_Projects\LinearEquationProject\LinearEquationProject\LinearEquationProject.cpp(417,21): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
   LinearEquationProject.vcxproj -> D:\Amr_Muhammad_Imp_Code\CodeBlocksRun\Digi\Foundation_Projects\LinearEquationProject\x64\Debug\LinearEquationProject.exe

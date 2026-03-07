@@ -34,6 +34,14 @@ struct Term {
 
   } ;
 
+
+
+
+/////////////////////////
+///////////////////////
+
+
+
 class Equation {
 
 public:
@@ -43,9 +51,22 @@ public:
 
     // تحويل المعادلة للشكل الصحيح يعني - (تجميع المتغيرات المكررة وترتيبها)
 
+
+    //////////////////////////////////
+       //////////////////////////////////
+
+
+
+// FUNC 1 simplify()
+        // ROLE : Sara 
+
+
     void simplify() {
+
+
         vector<Term> temp;
         for (int i = 0; i < terms.size(); i++) {
+        
             bool found = false;
             for (int j = 0; j < temp.size(); j++) {
                 if (temp[j].var == terms[i].var) {
@@ -66,7 +87,9 @@ public:
         // ترتيب المتغيرات أبجدياً (Selection Sort بسيط لتجنب Lambda)
         for (int i = 0; i < (int)temp.size() - 1; i++) {
             for (int j = i + 1; j < temp.size(); j++) {
-                if (temp[i].var > temp[j].var) swap(temp[i], temp[j]);
+                if (temp[i].var > temp[j].var) 
+                    
+                    swap(temp[i], temp[j]);
             }
         }
         terms = temp;
@@ -77,20 +100,31 @@ public:
 
 
 
+    //////////////////////////////////
+//////////////////////////////////
 
+
+// FUNC 2  toString()
+            // ROLE : Sara 
 
     // تحويل الكائن إلى نص للطباعة
 
     string toString() {
+
         ostringstream oss;
+
         for (int i = 0; i < terms.size(); i++) {
             float c = terms[i].coeff;
-            if (i > 0 && c > 0) oss << "+";
-            if (c == 1) oss << terms[i].var;
-            else if (c == -1) oss << "-" << terms[i].var;
+            if (i > 0 && c > 0)
+                oss << "+";
+            if (c == 1)
+                oss << terms[i].var;
+            else if 
+                (c == -1) oss << "-" << terms[i].var;
             else oss << c << terms[i].var;
         }
         oss << "=" << rhs;
+
         return oss.str();
     }
 };
@@ -98,7 +132,7 @@ public:
 
 
 
-
+    
 
 
 
@@ -121,6 +155,7 @@ class Solver {
 
 
     //   FUNC 1  parseTerm()
+        //         // ROLE : Maiar
 
 
 
@@ -138,6 +173,8 @@ class Solver {
 
 
     */
+
+            
 
     void parseTerm(string s, Equation& eq) {
         int x_idx = -1;
@@ -186,16 +223,18 @@ public:
 
 
     // FUNC 2 readEquations()
-
+          // ROLE : Maiar
 
 
 
 
     void readEquations(int n) {
         for (int i = 0; i < n; i++) {
+
             string line; cin >> line;
-            size_t eq_pos = line.find('=');
+             int  eq_pos = line.find('=');
             string left = line.substr(0, eq_pos);
+            
             Equation eq;
             eq.rhs = atof(line.substr(eq_pos + 1).c_str());
 
@@ -221,6 +260,7 @@ public:
             eqs.push_back(eq);
         }
         updateVarList();
+
     }
 
 
@@ -235,7 +275,10 @@ public:
 
     // FUNC 3 updateVarList()
 
+       // ROLE : Amr Muhammad , Ahmad Elsayed
+
     void updateVarList() {
+
         all_vars.clear();
         for (int i = 0; i < eqs.size(); i++) {
             for (int j = 0; j < eqs[i].terms.size(); j++) {
@@ -267,7 +310,7 @@ public:
     //////////////////////  
 
 
-
+           // ROLE :   Ahmad Elsayed
 
     // FUNC 4 addEq()
 
@@ -289,6 +332,7 @@ public:
 
     ///////////////////////
     //////////////////////
+           // ROLE :  Ahmad Elsayed
 
 
     Equation subEq(Equation a, Equation b) {
@@ -320,6 +364,7 @@ public:
 
 
         //FUN 6  // substituteVar()
+           // ROLE :  Ahmad Elsayed
    
     
     Equation substituteVar(string var, Equation eq1, Equation eq3) {
@@ -362,12 +407,29 @@ public:
 
 
 
+     //FUN 7  // getCoeffMatrix()
+        //      // ROLE : Amr Muhammad
+
+        //إنشاء مصفوفة المعاملات 
+
+    // نحول getCoeffMatrix لمصفوفة ثابتة 10×10
+    void getCoeffMatrix(float mat[10][10], int& n) {
+        n = eqs.size();  // عدد المعادلات / المتغيرات
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+                mat[i][j] = getCoeff(eqs[i], all_vars[j]);
+    }
+
+    ///////////////////////
+    /////////////////////// 
+
+
 
 
 
     //FUN 8 // getCoeff()
-
-
+        
+       // ROLE : Amr Muhammad
 
 
     float getCoeff(Equation& eq, string var) {
@@ -381,28 +443,14 @@ public:
     ///////////////////////
 
 
-    //FUN 7  // getCoeffMatrix()
-
-
-
-
-    // نحول getCoeffMatrix لمصفوفة ثابتة 10×10
-    void getCoeffMatrix(float mat[10][10], int& n) {
-        n = eqs.size();  // عدد المعادلات / المتغيرات
-        for (int i = 0; i < n; i++)
-            for (int j = 0; j < n; j++)
-                mat[i][j] = getCoeff(eqs[i], all_vars[j]);
-    }
-
-    ///////////////////////
-    ///////////////////////
+   
 
 
 
    
 
     //FUN 9  // determinant()
-
+       // ROLE : Amr Muhammad
 
 
 
@@ -454,11 +502,16 @@ public:
 
     // FUNC 10 execute() (مصححة للعمل مع مصفوفة ثابتة)
 
+
+       // ROLE : Amr Muhammad
+
     void execute() {
         string cmd;
         while (cin >> cmd && cmd != "quit") {
 
-            if (cmd == "D") {
+     if (cmd == "D") {
+
+
                 float mat[10][10]; int n;
                 getCoeffMatrix(mat, n);
 
@@ -469,6 +522,8 @@ public:
                         cout << endl;
                     }
                 }
+
+
                 else { // D x
                     string var; cin >> var;
                     int col = -1;
