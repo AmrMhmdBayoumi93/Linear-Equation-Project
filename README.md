@@ -39,7 +39,7 @@ The solver uses **Cramer's Rule** and supports up to **10 variables**.
 - ✅ Builds the coefficient matrix automatically
 - ✅ Computes determinant using recursive cofactor expansion
 - ✅ Solves n-variable systems using Cramer's Rule
-- ✅ Interactive command loop (`D`, `D_value`, `solve`, `quit`)
+- ✅ Interactive command loop with 9 commands (`D`, `D_value`, `solve`, `num_vars`, `equation`, `column`, `add`, `subtract`, `quit`)
 - ✅ Handles negative coefficients, coefficient of ±1, and constant terms
 
 ---
@@ -130,6 +130,11 @@ After entering all equations, type any of the following commands:
 | `D xi` | Print the matrix with column `xi` **replaced by the RHS vector** (used in Cramer's Rule) |
 | `D_value` | Print the **determinant** of the coefficient matrix |
 | `solve` | **Solve** the system and print each variable's value |
+| `num_vars` | Print the **number of distinct variables** in the system |
+| `equation n` | Print **equation number `n`** in simplified form (1-indexed) |
+| `column xi` | Print all **coefficients of variable `xi`** across every equation |
+| `add a b` | **Add** equations `a` and `b` and print the resulting equation |
+| `subtract a b` | **Subtract** equation `b` from equation `a` and print the result |
 | `quit` | **Exit** the program |
 
 ---
@@ -150,6 +155,11 @@ D
 1 -1 2
 2 1 1
 
+D x1
+10 2 -1
+3 -1 2
+9 1 1
+
 D_value
 -10
 
@@ -157,6 +167,23 @@ solve
 x1=2
 x2=1
 x3=3
+
+num_vars
+3
+
+equation 1
+3x1+2x2-1x3=10
+
+column x2
+2
+-1
+1
+
+add 1 2
+4x1+x2+x3=13
+
+subtract 1 2
+2x1+3x2-3x3=7
 
 quit
 ```
