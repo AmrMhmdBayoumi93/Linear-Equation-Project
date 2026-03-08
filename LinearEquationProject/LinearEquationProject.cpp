@@ -12,9 +12,9 @@ using namespace std;
 
 
 
-                // Term Struct and Equation class and Solver class
+// Term Struct and Equation class and Solver class
 
-            
+
 
 
 
@@ -32,7 +32,7 @@ struct Term {
     float coeff;
     string var;
 
-  } ;
+};
 
 
 
@@ -66,7 +66,7 @@ public:
 
         vector<Term> temp;
         for (int i = 0; i < terms.size(); i++) {
-        
+
             bool found = false;
             for (int j = 0; j < temp.size(); j++) {
                 if (temp[j].var == terms[i].var) {
@@ -87,8 +87,8 @@ public:
         // ترتيب المتغيرات أبجدياً (Selection Sort بسيط لتجنب Lambda)
         for (int i = 0; i < (int)temp.size() - 1; i++) {
             for (int j = i + 1; j < temp.size(); j++) {
-                if (temp[i].var > temp[j].var) 
-                    
+                if (temp[i].var > temp[j].var)
+
                     swap(temp[i], temp[j]);
             }
         }
@@ -119,7 +119,7 @@ public:
                 oss << "+";
             if (c == 1)
                 oss << terms[i].var;
-            else if 
+            else if
                 (c == -1) oss << "-" << terms[i].var;
             else oss << c << terms[i].var;
         }
@@ -132,7 +132,7 @@ public:
 
 
 
-    
+
 
 
 
@@ -174,7 +174,7 @@ class Solver {
 
     */
 
-            
+
 
     void parseTerm(string s, Equation& eq) {
         int x_idx = -1;
@@ -232,19 +232,23 @@ public:
         for (int i = 0; i < n; i++) {
 
             string line; cin >> line;
-             int  eq_pos = line.find('=');
+
+            int  eq_pos = line.find('=');
             string left = line.substr(0, eq_pos);
-            
+
             Equation eq;
             eq.rhs = atof(line.substr(eq_pos + 1).c_str());
 
             string current = "";
+
             for (int j = 0; j < left.length(); j++) {
                 if (j > 0 && (left[j] == '+' || left[j] == '-')) {
                     parseTerm(current, eq);
                     current = "";
                 }
+
                 current += left[j];
+            
             }
 
 
@@ -282,6 +286,7 @@ public:
         all_vars.clear();
         for (int i = 0; i < eqs.size(); i++) {
             for (int j = 0; j < eqs[i].terms.size(); j++) {
+
                 bool exists = false;
                 for (int k = 0; k < all_vars.size(); k++) {
                     if (all_vars[k] == eqs[i].terms[j].var)
@@ -292,6 +297,7 @@ public:
             }
         }
         sort(all_vars.begin(), all_vars.end());
+        // sort -- callback function --- obj 
     }
 
 
@@ -365,8 +371,8 @@ public:
 
         //FUN 6  // substituteVar()
            // ROLE :  Ahmad Elsayed
-   
-    
+
+
     Equation substituteVar(string var, Equation eq1, Equation eq3) {
 
         Equation result = eq1;
@@ -428,7 +434,7 @@ public:
 
 
     //FUN 8 // getCoeff()
-        
+
        // ROLE : Amr Muhammad
 
 
@@ -443,11 +449,11 @@ public:
     ///////////////////////
 
 
-   
 
 
 
-   
+
+
 
     //FUN 9  // determinant()
        // ROLE : Amr Muhammad
@@ -476,7 +482,7 @@ public:
     }
 
 
- 
+
 
 
 
@@ -504,18 +510,23 @@ public:
 
 
        // ROLE : Amr Muhammad
+// ROLE : Amr Muhammad
 
     void execute() {
+
         string cmd;
+
         while (cin >> cmd && cmd != "quit") {
+ 
+            if (cmd == "D") {
 
-     if (cmd == "D") {
+                float mat[10][10];
+                int n;
 
-
-                float mat[10][10]; int n;
                 getCoeffMatrix(mat, n);
 
-                if (cin.peek() == '\n') { // D فقط
+                if (cin.peek() == '\n') {
+
                     for (int i = 0; i < n; i++) {
                         for (int j = 0; j < n; j++)
                             cout << mat[i][j] << " ";
@@ -523,14 +534,20 @@ public:
                     }
                 }
 
+                else {
 
-                else { // D x
-                    string var; cin >> var;
+                    string var;
+                    cin >> var;
+
                     int col = -1;
+
                     for (int i = 0; i < all_vars.size(); i++)
-                        if (all_vars[i] == var) col = i;
+                        if (all_vars[i] == var)
+                            col = i;
+
                     for (int i = 0; i < n; i++)
                         mat[i][col] = eqs[i].rhs;
+
                     for (int i = 0; i < n; i++) {
                         for (int j = 0; j < n; j++)
                             cout << mat[i][j] << " ";
@@ -538,35 +555,101 @@ public:
                     }
                 }
             }
-
+ 
             else if (cmd == "D_value") {
-                float mat[10][10]; int n;
+
+                float mat[10][10];
+                int n;
+
                 getCoeffMatrix(mat, n);
+
                 cout << determinant(mat, n) << endl;
             }
 
+            
             else if (cmd == "solve") {
-                float mat[10][10]; int n;
+
+                float mat[10][10];
+                int n;
+
                 getCoeffMatrix(mat, n);
+
                 float D = determinant(mat, n);
-                if (fabs(D) < 1e-6) { cout << "No Solution" << endl; continue; }
+
+                if (fabs(D) < 0.000001) {
+
+                    cout << "No Solution" << endl;
+                    continue;
+                }
 
                 for (int v = 0; v < all_vars.size(); v++) {
+
                     float temp[10][10];
-                    int i, j;
-                    for (i = 0; i < n; i++)
-                        for (j = 0; j < n; j++)
+
+                    for (int i = 0; i < n; i++)
+                        for (int j = 0; j < n; j++)
                             temp[i][j] = mat[i][j];
-                    for (i = 0; i < n; i++)
+
+                    for (int i = 0; i < n; i++)
                         temp[i][v] = eqs[i].rhs;
+
                     float Dv = determinant(temp, n);
+
                     cout << all_vars[v] << "=" << Dv / D << endl;
                 }
             }
+ 
+            else if (cmd == "num_vars") {
+
+                cout << all_vars.size() << endl;
+            }
+
+           
+            else if (cmd == "equation") {
+
+                int idx;
+                cin >> idx;
+
+                if (idx >= 1 && idx <= eqs.size())
+                    cout << eqs[idx - 1].toString() << endl;
+            }
+
+            
+            else if (cmd == "column") {
+
+                string var;
+                cin >> var;
+
+                for (int i = 0; i < eqs.size(); i++)
+                    cout << getCoeff(eqs[i], var) << endl;
+            }
+
+            
+            else if (cmd == "add") {
+
+                int a, b;
+                cin >> a >> b;
+
+                Equation res = addEq(eqs[a - 1], eqs[b - 1]);
+
+                cout << res.toString() << endl;
+            }
+ 
+            else if (cmd == "subtract") {
+
+                int a, b;
+                cin >> a >> b;
+
+                Equation res = subEq(eqs[a - 1], eqs[b - 1]);
+
+                cout << res.toString() << endl;
+
+
+
+
+            }
         }
     }
-    
-
 
 };
 
@@ -579,31 +662,31 @@ public:
 
 
 
-    int main() {
+int main() {
 
-        // run it on CMD
-
-
-
-        int n;
-        if (!(cin >> n))
-            return 0;
-
-
-        Solver mySolver;
-
-        mySolver.readEquations(n);
-        mySolver.execute();
+    // run it on CMD
 
 
 
-
-
-
-
-
+    int n;
+    if (!(cin >> n))
         return 0;
 
 
+    Solver mySolver;
 
-   }
+    mySolver.readEquations(n);
+    mySolver.execute();
+
+
+
+
+
+
+
+
+    return 0;
+
+
+
+}
